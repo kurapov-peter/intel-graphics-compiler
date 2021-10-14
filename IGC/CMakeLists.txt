@@ -912,6 +912,7 @@ foreach(_compilerFlagName IN ITEMS "CMAKE_CXX_FLAGS" "CMAKE_C_FLAGS")
           -msse4.2
           -Wno-unknown-pragmas
           -fPIC
+          -Bsymbolic
     )
     igc_config_flag_apply_settings(
         CompilerOptions
@@ -958,6 +959,7 @@ foreach(_compilerFlagName IN ITEMS "CMAKE_CXX_FLAGS" "CMAKE_C_FLAGS")
         -finline
         -fkeep-inline-functions
         -msse4.2
+        -Bsymbolic
     )
     if(NOT CMAKE_C_COMPILER_VERSION LESS "4.0")
       igc_config_flag_apply_settings(
