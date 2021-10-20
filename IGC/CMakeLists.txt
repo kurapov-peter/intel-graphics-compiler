@@ -425,6 +425,8 @@ set(IGC_BUILD__TOOLS_OUTPUT_DIR     "${IGC_OPTION__OUTPUT_DIR}/Tools")
 set(IGC_BUILD__UNIT_TEST_OUTPUT_DIR "${IGC_OPTION__OUTPUT_DIR}/UnitTests")
 set(IGC_BUILD__CTH_DIR              "${IGC_OPTION__OUTPUT_DIR}/fcl")
 
+set(IGC_BUILD_EXPORTED_SYMBOLS_MAP "${IGC_SOURCE_DIR}/vis.map")
+
 # Including CIF
 set(CIF_BASE_DIR "AdaptorOCL/cif")
 add_subdirectory("${CIF_BASE_DIR}/cif" ${CMAKE_CURRENT_BINARY_DIR}/cif)
@@ -1025,6 +1027,10 @@ endif()
 
 # ============================================ Linker options ==========================================
 
+if(UNIX)
+    string(APPEND CMAKE_SHARED_LINKER_FLAGS " -Wl,--version-script=${IGC_BUILD_EXPORTED_SYMBOLS_MAP}")
+endif()
+
 foreach(_linkerFlagName IN ITEMS "CMAKE_EXE_LINKER_FLAGS" "CMAKE_SHARED_LINKER_FLAGS")
   # Change some generic settings of linker.
   # NOTE: Debug info generation is enabled for all build configuration, because it is separate on Windows
@@ -1526,6 +1532,10 @@ if(MSVC AND IGC_OPTION__UNIVERSAL_DRIVER)
     set_target_properties(${IGC_BUILD__PROJ__fcl_dll} PROPERTIES VS_GLOBAL_DriverTargetPlatform Universal)
     set_target_properties(${IGC_BUILD__PROJ__fcl_dll} PROPERTIES VS_TARGET_PLATFORM_VERSION "")
     windows_libs_props_universal(${IGC_BUILD__PROJ__fcl_dll})
+endif()
+
+if(UNIX)
+    set_target_properties(${IGC_BUILD__PROJ__igc_lib} PROPERTIES LINK_DEPENDS "${IGC_BUILD_EXPORTED_SYMBOLS_MAP}")
 endif()
 
 if(IGC_OPTION__INCLUDE_IGC_COMPILER_TOOLS)

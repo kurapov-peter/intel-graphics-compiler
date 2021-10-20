@@ -1,0 +1,18 @@
+{
+    global:
+        CIFCreateMain;
+        Create;
+        Delete;
+        JITCompile;
+        JITCompile_v2;
+        OpenCompiler10;
+        OpenCompiler12;
+        OpenCompiler9;
+        OpenOGLCompiler;
+        OpenVulkanCompiler;
+        Register;
+        freeBlock;
+        getJITVersion;
+    local:
+        *;
+};
