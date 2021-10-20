@@ -13,6 +13,7 @@
         Register;
         freeBlock;
         getJITVersion;
+        IDR_CTH_H*;
     local:
         *;
 };
